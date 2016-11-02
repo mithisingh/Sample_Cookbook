@@ -1,0 +1,12 @@
+#Defining attributes 
+
+case node['platform_family']
+when 'rhel'
+default['php']['src_installer_path'] = 'php7_rpm_path' #change the path with respect to php version that we want to install
+default['php']['apache'] = 'httpd_path' #change the path with respect to apache version that we want to install
+default['php']['oracle'] = 'oracle_path'
+
+when 'centos'
+default['php']['src_installer_path'] = 'php5_rpm_path' #change the path with respect to php version that we want to install
+default['php']['apache'] = 'httpd_path' #change the path with respect to apache version that we want to install
+default['php']['oracle'] = 'oracle_path'

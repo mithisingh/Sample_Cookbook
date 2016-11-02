@@ -1,0 +1,1 @@
+Generic cookbook for PHP installation at Linux server.

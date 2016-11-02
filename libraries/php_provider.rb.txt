@@ -1,0 +1,35 @@
+class Chef
+  class Resource
+    class PhpProvider < Chef::Resource
+      include Poise
+      actions :install, :upgrade, :remove
+      default_action :install
+      attr_accessor :exists
+      attribute :src_installer_path, kind_of: String, required: true, :apache_installer_path, kind_of: String, required: true, :oracle_installer_path, kind_of: String, required: true
+    end
+  end
+  class Provider
+    class PhpProvider < Chef::Provider
+      include Poise
+      include Chef::Mixin::ShellOut
+
+      def action_nothing
+        # Literally, do nothing
+      end
+
+      def whyrun_supported?
+        true
+      end
+
+      def action_install
+	    #use shell commands to install packages
+	  end
+      def action_upgrade
+	    #use shell commands to upgrade packages
+	  end
+      def action_remove
+	    #use shell commands to install packages
+	  end
+	end
+  end
+end  

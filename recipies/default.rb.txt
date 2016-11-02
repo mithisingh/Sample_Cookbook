@@ -1,0 +1,50 @@
+#Default recipe
+Chef::Resource::RubyBlock.send(:include, Chef::Mixin::ShellOut)
+
+specified_version = node['php']['src_installer_path']
+
+# If we specified a version, and it's not the current version, move to the specified version
+current_version = shell_out("command to get installed version of PHP").stdout
+
+if ("#{specified_version}" == 7.*)
+  include_recipe 'basic_role_specific_for_PHP7'
+  if (current_version.empty?)
+    php_provider 'install on baremetal vm' do
+      src_installer_path node['php']['src_installer_path']
+      apache_installer_path node['php']['apache']
+      oracle_installer_path node['php']['oracle']
+	  action :install
+    end
+  end
+  if ("#{specified_version}" > "#{current_version}")
+    php_provider 'upgrade the version' do
+      src_installer_path node['php']['src_installer_path']
+      apache_installer_path node['php']['apache']
+      oracle_installer_path node['php']['oracle']
+	  action :upgrade
+    end
+  end
+end
+
+if ("#{specified_version}" == 5.*)
+  include_recipe 'basic_role_specific_for_PHP5'
+  if (current_version.empty?)
+    php_provider 'install on baremetal vm' do
+      src_installer_path node['php']['src_installer_path']
+      apache_installer_path node['php']['apache']
+      oracle_installer_path node['php']['oracle']
+	  action :install
+    end
+  end
+  if ("#{specified_version}" > "#{current_version}")
+    php_provider 'upgrade the version' do
+      src_installer_path node['php']['src_installer_path']
+      apache_installer_path node['php']['apache']
+      oracle_installer_path node['php']['oracle']
+	  action :upgrade
+    end
+  end
+end
+include_recipe 'php::ini'
+
+  
